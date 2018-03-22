@@ -1,4 +1,5 @@
 import requests
+import time
 
 print('Starting...')
 
@@ -31,14 +32,16 @@ for edge in follower_edges:
   print(edge['node']['username'] + ', ' + edge['node']['id'] + ', ' + current_user_name)
   count += 1
 round += 1
-print('round: ' + round + ', ' +count)
+print('round: ' + str(round) + ', ' + str(count))
 
 
 for user in users:
   current_user_id = user
   if current_user_id not in finded:
     follower_path = 'https://www.instagram.com/graphql/query/?query_hash=37479f2b8209594dde7facb0d904896a&variables=%7B%22id%22%3A%22' + current_user_id +'%22%2C%22first%22%3A1000%7D'
-    print('path: ' + follower_path)
+    # print('path: ' + follower_path)
+    time.sleep(5)
+    print('Requesting...')
     r_follower = requests.get(follower_path, headers=headers)
     follower_data = r_follower.json()
     if follower_data['data']:
@@ -49,6 +52,6 @@ for user in users:
         print(edge['node']['username'] + ', ' + edge['node']['id'] + ', ' + current_user_id)
         count += 1
     round += 1
-    print('round: ' + round + ', ' + count)
+    print('round: ' + str(round) + ', ' + str(count))
 print(count)
 print('End...')
