@@ -1,0 +1,14 @@
+version: '3'
+services:
+  script:
+    build: ./script
+    command: python script.py
+    volumes:
+        - ./script:/script
+    depends_on:
+        - db
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
