@@ -11,6 +11,16 @@ const getUserById = async (id) => {
     throw err;
   }
 }
+const getUserByUserName = async (username) => {
+  const connection = await getConnection();
+  try {
+    const [rows] = await connection.query('SELECT * FROM `users` WHERE `username` = ?', [username]);
+    await connection.end();
+    return rows[0];
+  } catch(err) {
+    throw err;
+  }
+}
 
 const insertUser = async (userData) => {
   const connection = await getConnection();
@@ -28,4 +38,5 @@ const insertUser = async (userData) => {
 module.exports = {
   getUserById,
   insertUser,
+  getUserByUserName,
 }

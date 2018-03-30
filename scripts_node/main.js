@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
-const { getUserById, insertUser } = require('./user');
+const { getUserById, insertUser, getUserByUserName } = require('./user');
 const { getUserRelationById } = require('./userRelation')
 
 const headers = {
@@ -13,19 +13,14 @@ let userCount3 = 3;
 let userFollowerCount = 1;
 
 const main = async () => {
-  _.times(69, (index) => {
+  _.times(99999, (index) => {
     setTimeout(() => {
-      console.log(`count: ${index+1}`)
-      const start = 183;
-      let userCount1 = start + 0 + (index * 4);
-      let userCount2 = start + 1 + (index * 4);
-      let userCount3 = start + 2 + (index * 4);
-      let userCount4 = start + 3 + (index * 4);
+      const start = 0;
+      const round = (index * 1) % 275;
+      console.log(`count: ${index+1}, round: ${round}`)
+      let userCount1 = start + 1 + round;
       worker(userCount1);
-      worker(userCount2);
-      worker(userCount3);
-      worker(userCount4);
-    }, 8000 * (index+1));
+    }, 1000 * (index+1));
   })
 }
 
@@ -33,8 +28,11 @@ const worker = async (id) => {
   const userRelation = await getUserRelationById(id);
   if (userRelation) {
     const userName1 = await userRelation.followed;
-    const user1 = await getUserInstagramData(userName1);
-    await insertUser(user1);
+    const checkUser = await getUserByUserName(userName1);
+    if (!checkUser) {
+      const user1 = await getUserInstagramData(userName1);
+      await insertUser(user1);
+    }
   }
 }
 
