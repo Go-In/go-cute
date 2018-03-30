@@ -1,16 +1,41 @@
+const _ = require('lodash');
 const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
-const { getUserById } = require('./user');
+const { getUserById, insertUser } = require('./user');
+const { getUserRelationById } = require('./userRelation')
 
 const headers = {
-  'cookie': 'mid=WIYWkwAEAAG_lPLbHV_GeSgBhxYE; ig_or=landscape-primary; datr=bxqyWo-zwpMjcjOvAfkghaah; csrftoken=VHXz53J0knowbM4kMJezciLSfHn4URip; ds_user_id=494199025; rur=FRC; ig_pr=2.200000047683716; ig_vh=639; sessionid=IGSCb84d292e1374bd2c2f0bb31899963608199068692c6c3ace09cefb1a8e752b0b%3AWS6WJd99dHPJHfjBWrWvq4f2O4yBoEW7%3A%7B%22_auth_user_id%22%3A494199025%2C%22_auth_user_backend%22%3A%22accounts.backends.CaseInsensitiveModelBackend%22%2C%22_auth_user_hash%22%3A%22%22%2C%22_platform%22%3A4%2C%22_token_ver%22%3A2%2C%22_token%22%3A%22494199025%3AACktlXE2rmDHdwlkQtpvQmpYJ5VoSKgV%3A2ad7a447c3d0eebe028ba0c11c5513e4b69f196a810b96fe081d65775a1aaad2%22%2C%22last_refreshed%22%3A1522400635.3168668747%7D; ig_vw=677; fbm_124024574287414=base_domain=.instagram.com; fbsr_124024574287414=jBSnbTRWbrNgnkXzM-pWVYvaB3vzskNY-PwNwtKXnH0.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiJBUUFHS01HZnFWTjhieFh5NXhGNXJuWndNY0JIX2dGaW04bnlKYXZkSGFjUENCc3lRNG9MR0lXNWR2MFpsMkNSVlpqTHhaTUxxckh2aE5EdHg3ZUNmOTJUY2hTckN2aWFtbTJqaGNTMUYxU01IMXM1b1E0TW9rVHdkLWN4MFNfZDRVdm01SFFjOWdBUk55MHZ2WlNVODVvTXBFS3ZGRDB5UHF6cHpNSGx6cEswV1pvTXM3RW44dEl5MzRIUFVfcFpSUWlvUDBQWnVodDRHcHJhMlh2amlQQW9WTkVJS2gwTndneUFJN28wUC1BbG9GYjlkXy1VSFY3el9zTTJaNW9ieVFzVVIza21hZ05DTy00UlEzak1ZVWFiVkhlcHk4WXlIeDlPejZVc3d1RkN1YWlwSkp5Rm5ScXBERVVGZElqbmZyNmdNa1QwY2pwNzVvc1J1TnhwdUJVTFJKNGNETEwtcy1WUUFNV3pEM25SQV9mUjlIcUlQYTVVNXl6eTVvQzM4NzAiLCJpc3N1ZWRfYXQiOjE1MjI0MTQ5NjMsInVzZXJfaWQiOiIxMDAwMDE1Njk5MTk5OTIifQ; urlgen="{\"time\": 1522400635}:1f1tg4:A99cKl466_sapxFA_wd_HwfcrpM"',
+  'cookie': '',
 }
-let userCount = 1;
+let userCount1 = 1;
+let userCount2 = 2;
+let userCount3 = 3;
 let userFollowerCount = 1;
 
 const main = async () => {
-  const user = await getUserById(1);
-  console.log(user)
+  _.times(69, (index) => {
+    setTimeout(() => {
+      console.log(`count: ${index+1}`)
+      const start = 183;
+      let userCount1 = start + 0 + (index * 4);
+      let userCount2 = start + 1 + (index * 4);
+      let userCount3 = start + 2 + (index * 4);
+      let userCount4 = start + 3 + (index * 4);
+      worker(userCount1);
+      worker(userCount2);
+      worker(userCount3);
+      worker(userCount4);
+    }, 8000 * (index+1));
+  })
+}
+
+const worker = async (id) => {
+  const userRelation = await getUserRelationById(id);
+  if (userRelation) {
+    const userName1 = await userRelation.followed;
+    const user1 = await getUserInstagramData(userName1);
+    await insertUser(user1);
+  }
 }
 
 main();

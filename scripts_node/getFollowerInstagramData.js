@@ -16,7 +16,7 @@ const getFollowerRelation = async (userId, headers) => {
     const payload = edges.map((edge) => {
       const data = [
         userId,
-        edge.node.id,
+        edge.node.username,
       ]
       return data;
     });
