@@ -7,7 +7,7 @@ const main = async () => {
   const createUserTableSql = `CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(255),
-    full_name VARCHAR(255) CHARACTER SET utf8,
+    full_name VARCHAR(255) CHARACTER SET utf8mb4,
     username VARCHAR(255) CHARACTER SET utf8mb4,
     biography VARCHAR(255) CHARACTER SET utf8mb4,
     edge_followed_by INT,

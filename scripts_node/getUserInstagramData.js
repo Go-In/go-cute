@@ -16,8 +16,8 @@ const getUserData = async (userName, headers) => {
     // console.log('id: ' + user.graphql.user.id);
     const payload = {
       user_id: user.graphql.user.id,
-      full_name: user.graphql.user.username,
-      username: user.graphql.user.full_name,
+      full_name: user.graphql.user.full_name,
+      username: user.graphql.user.username,
       biography: user.graphql.user.biography,
       edge_followed_by: user.graphql.user.edge_followed_by.count,
       edge_follow: user.graphql.user.edge_follow.count,
