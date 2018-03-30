@@ -1,5 +1,5 @@
 require('isomorphic-fetch');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const getConnection = require('./connection');
 
 const getPath = (user) => 'https://www.instagram.com/' + user + '/?__a=1';
