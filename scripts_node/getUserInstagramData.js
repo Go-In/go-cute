@@ -25,21 +25,8 @@ const getUserData = async (userName, headers) => {
       profile_pic_url: user.graphql.user.profile_pic_url,
       media_count: user.graphql.user.edge_owner_to_timeline_media.count,
     }
-    await saveUserData(payload);
+    return payload;
 
-  } catch (err) {
-    console.log(err)
-    throw err;
-  }
-}
-
-const saveUserData = async (userData) => {
-  const connection = await getConnection();
-
-  try {
-    await connection.query('INSERT INTO users SET ?', userData);
-    console.log('user data saved.');
-    await connection.end();
   } catch (err) {
     console.log(err)
     throw err;

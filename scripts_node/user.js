@@ -12,6 +12,20 @@ const getUserById = async (id) => {
   }
 }
 
+const insertUser = async (userData) => {
+  const connection = await getConnection();
+
+  try {
+    await connection.query('INSERT INTO users SET ?', userData);
+    console.log('user data saved.');
+    await connection.end();
+  } catch (err) {
+    console.log(err)
+    throw err;
+  }
+}
+
 module.exports = {
   getUserById,
+  insertUser,
 }
