@@ -12,13 +12,14 @@ const main = async () => {
   const createUserTableSql = `CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(255),
-    full_name VARCHAR(255),
-    username VARCHAR(255),
-    biography VARCHAR(255),
+    full_name VARCHAR(255) CHARACTER SET utf8,
+    username VARCHAR(255) CHARACTER SET utf8,
+    biography VARCHAR(255) CHARACTER SET utf8,
     edge_followed_by INT,
+    edge_follow INT,
     is_private BOOLEAN,
-    profile_pic_url VARCHAR(255),
-    count INT
+    profile_pic_url VARCHAR(255) CHARACTER SET utf8,
+    media_count INT
   )`;
   try {
     await connection.execute(createUserTableSql);
