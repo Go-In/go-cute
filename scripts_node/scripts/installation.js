@@ -1,13 +1,8 @@
 const mysql = require('mysql2');
+const getConnection = require('../connection');
 
 const main = async () => {
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'go-cute',
-  });
-  console.log('connected.')
+  const connection = await getConnection();
 
   const createUserTableSql = `CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

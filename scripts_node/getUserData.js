@@ -1,5 +1,6 @@
 require('isomorphic-fetch');
 const mysql = require('mysql2');
+const getConnection = require('./connection');
 
 const getPath = (user) => 'https://www.instagram.com/' + user + '/?__a=1';
 
@@ -11,8 +12,8 @@ const getUserData = async (userName, headers) => {
       headers,
     });
     const user = await res.json();
-    console.log('username: ' + user.graphql.user.username);
-    console.log('id: ' + user.graphql.user.id);
+    // console.log('username: ' + user.graphql.user.username);
+    // console.log('id: ' + user.graphql.user.id);
     const payload = {
       user_id: user.graphql.user.id,
       full_name: user.graphql.user.username,
@@ -33,15 +34,11 @@ const getUserData = async (userName, headers) => {
 }
 
 const saveUserData = async (userData) => {
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'go-cute',
-  });
+  const connection = await getConnection();
+
   try {
     await connection.query('INSERT INTO users SET ?', userData);
-    console.log('saved.');
+    console.log('user data saved.');
     await connection.end();
   } catch (err) {
     console.log(err)

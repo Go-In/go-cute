@@ -1,5 +1,6 @@
 require('isomorphic-fetch');
 const mysql = require('mysql2');
+const getConnection = require('./connection');
 
 const max = 1000;
 
@@ -28,15 +29,11 @@ const getFollowerRelation = async (userId, headers) => {
 }
 
 const saveFollowerRelationData = async (followerData) => {
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'go-cute',
-  });
+  const connection = await getConnection();
+
   try {
     await connection.query('INSERT INTO user_relations (user_id, followed) VALUES ?', [followerData]);
-    console.log('saved.');
+    console.log('follower data saved.');
     await connection.end();
   } catch (err) {
     console.log(err)
