@@ -20,21 +20,8 @@ const getFollowerRelation = async (userId, headers) => {
       ]
       return data;
     });
-    await saveFollowerRelationData(payload);
+    return payload;
 
-  } catch (err) {
-    console.log(err)
-    throw err;
-  }
-}
-
-const saveFollowerRelationData = async (followerData) => {
-  const connection = await getConnection();
-
-  try {
-    await connection.query('INSERT INTO user_relations (user_id, followed) VALUES ?', [followerData]);
-    console.log('follower data saved.');
-    await connection.end();
   } catch (err) {
     console.log(err)
     throw err;
