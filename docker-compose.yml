@@ -2,13 +2,11 @@ version: '3'
 services:
   script:
     build: ./script
-    command: python script.py
-    volumes:
-        - ./script:/script
+    command: /bin/bash -c 'sleep 5s' && python3 db_experiment.py
     depends_on:
         - db
   db:
     image: mysql
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: experiment_db
+          MYSQL_ROOT_PASSWORD: experiment_pwd
