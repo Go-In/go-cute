@@ -1,2 +1,3 @@
 .vscode
 scripts_node/node_modules
+scripts_node/.env

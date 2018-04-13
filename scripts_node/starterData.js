@@ -2,13 +2,14 @@ const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
 const { insertUser } = require('./user');
 const { insertUserRelations } = require('./userRelation');
+require('dotenv').config();
 
 const headers = {
-  'cookie': '',
+  'cookie': process.env.cookie,
 }
 const userStarter = {
-  username: '',
-  id: ''
+  username: process.env.username,
+  id: process.env.userId
 };
 console.log(`Creating starter data with username "${userStarter.username}"...`);
 
