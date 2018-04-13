@@ -35,8 +35,35 @@ const insertUser = async (userData) => {
   }
 }
 
+const findUserNotFetchToFetch = async () => {
+  const connection = await getConnection();
+  try {
+    await connection.beginTransaction();
+    const [rows] = await connection.query('SELECT `user_id` from `users` WHERE `fetch` = FALSE LIMIT 1');
+    await connection.query('UPDATE users SET `fetch` = 1 WHERE `user_id` = ?', [rows[0].user_id])
+    await connection.commit();
+    await connection.end();
+    return rows[0].user_id;
+  } catch(err) {
+    await connection.rollback();
+    await connection.end();
+  }
+}
+
+const checkUserExited = async (id) => {
+  const connection = await getConnection();
+  try {
+    const [rows] = await connection.query('SELECT EXISTS(SELECT 1 FROM `users` WHERE `user_id` = ? LIMIT 1)', [id]);
+    await connection.end();
+    return Object.values(rows[0])[0] === 1;
+  } catch(err) {
+    throw err;
+  }
+}
+
 module.exports = {
   getUserById,
   insertUser,
   getUserByUserName,
+  findUserNotFetchToFetch,
 }
