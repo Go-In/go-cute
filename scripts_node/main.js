@@ -3,9 +3,11 @@ const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
 const { getUserById, insertUser, getUserByUserName } = require('./user');
 const { getUserRelationById } = require('./userRelation')
+const { checkUserExited } = require('./checkUserExited');
+require('dotenv').config();
 
 const headers = {
-  'cookie': '',
+  'cookie': process.env.cookie,
 }
 let userCount1 = 1;
 let userCount2 = 2;
@@ -13,15 +15,17 @@ let userCount3 = 3;
 let userFollowerCount = 1;
 
 const main = async () => {
-  _.times(99999, (index) => {
-    setTimeout(() => {
-      const start = 0;
-      const round = (index * 1) % 275;
-      console.log(`count: ${index+1}, round: ${round}`)
-      let userCount1 = start + 1 + round;
-      worker(userCount1);
-    }, 1000 * (index+1));
-  })
+  const res = await checkUserExited('30305044');
+  console.log(res);
+  // _.times(99999, (index) => {
+  //   setTimeout(() => {
+  //     const start = 0;
+  //     const round = (index * 1) % 275;
+  //     console.log(`count: ${index+1}, round: ${round}`)
+  //     let userCount1 = start + 1 + round;
+  //     worker(userCount1);
+  //   }, 1000 * (index+1));
+  // })
 }
 
 const worker = async (id) => {
