@@ -3,7 +3,6 @@ const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
 const { getUserById, insertUser, getUserByUserName, findUserNotFetchToFetch } = require('./user');
 const { getUserRelationById } = require('./userRelation')
-const { checkUserExited } = require('./checkUserExited');
 require('dotenv').config();
 
 const headers = {
