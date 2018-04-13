@@ -1,6 +1,6 @@
 import pymysql
 
-db = pymysql.connect("db", "root", "testing", "testing")
+db = pymysql.connect("db", "root", "experiment_pwd", "experiment_db")
 
 cursor = db.cursor()
 

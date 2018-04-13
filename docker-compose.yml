@@ -8,5 +8,5 @@ services:
   db:
     image: mysql
     environment:
-          MYSQL_DATABASE: experiment
-          MYSQL_ROOT_PASSWORD: experiment
+          MYSQL_DATABASE: experiment_db
+          MYSQL_ROOT_PASSWORD: experiment_pwd
