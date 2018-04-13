@@ -3,9 +3,10 @@ const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
 const { getUserById, insertUser, getUserByUserName } = require('./user');
 const { getUserRelationById } = require('./userRelation')
+require('dotenv').config();
 
 const headers = {
-  'cookie': '',
+  'cookie': process.env.cookie,
 }
 let userCount1 = 1;
 let userCount2 = 2;

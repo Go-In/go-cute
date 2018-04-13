@@ -3,6 +3,7 @@ const getFollowerInstagramRelation = require('./getFollowerInstagramData');
 const { insertUser } = require('./user');
 const { insertUserRelations } = require('./userRelation');
 require('dotenv').config();
+
 const headers = {
   'cookie': process.env.cookie,
 }
