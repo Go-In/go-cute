@@ -15,7 +15,7 @@ const main = async () => {
     is_private BOOLEAN,
     profile_pic_url VARCHAR(255) CHARACTER SET utf8,
     media_count INT,
-    fetch BOOLEAN DEFAULT 0,
+    is_fetch BOOLEAN DEFAULT 0
   )`;
   try {
     await connection.execute(createUserTableSql);
