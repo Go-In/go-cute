@@ -16,7 +16,7 @@ const insertUserRelations = async (followerData) => {
   const connection = await getConnection();
 
   try {
-    await connection.query('INSERT INTO user_relations (user_id, followed) VALUES ?', [followerData]);
+    await connection.query('INSERT INTO user_relations (user_id, followed, username) VALUES ?', [followerData]);
     console.log('follower data saved.');
     await connection.end();
   } catch (err) {

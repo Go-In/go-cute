@@ -26,7 +26,8 @@ const main = async () => {
   const createUserRelationTableSql = `CREATE TABLE user_relations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(255),
-    followed VARCHAR(255)
+    followed VARCHAR(255),
+    username VARCHAR(255)
   )`;
   try {
     await connection.execute(createUserRelationTableSql)

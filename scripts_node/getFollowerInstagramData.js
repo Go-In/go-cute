@@ -12,7 +12,7 @@ const getFollowerRelation = async (userId, headers) => {
       headers,
     });
     const user = await res.json();
-    const { edges } = user.data.user.edge_followed_by;
+    const { edges, page_info } = user.data.user.edge_followed_by;
     const payload = edges.map((edge) => {
       const data = [
         userId,

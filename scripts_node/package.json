@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "node scripts/installation.js && node starterData.js",
+    "setup": "node scripts/installation.js",
     "drop-table": "node scripts/dropTable.js"
   },
   "keywords": [],
