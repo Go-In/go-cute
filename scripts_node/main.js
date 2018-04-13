@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const getUserInstagramData = require('./getUserInstagramData');
 const getFollowerInstagramRelation = require('./getFollowerInstagramData');
-const { getUserById, insertUser, getUserByUserName } = require('./user');
+const { getUserById, insertUser, getUserByUserName, findUserNotFetchToFetch } = require('./user');
 const { getUserRelationById } = require('./userRelation')
 const { checkUserExited } = require('./checkUserExited');
 require('dotenv').config();
@@ -15,7 +15,8 @@ let userCount3 = 3;
 let userFollowerCount = 1;
 
 const main = async () => {
-  const res = await checkUserExited('30305044');
+  // const res = await checkUserExited('30305044');
+  const res = await findUserNotFetchToFetch();
   console.log(res);
   // _.times(99999, (index) => {
   //   setTimeout(() => {
