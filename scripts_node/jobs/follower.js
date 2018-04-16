@@ -1,8 +1,8 @@
 const _ = require('lodash');
 const moment = require('moment');
-const getUserInstagramData = require('./getUserInstagramData');
-const getFollowerInstagramRelation = require('./getFollowerInstagramData');
-const getAllFollowerInstagramRelation = require('./getAllFollowerInstagramData');
+const getUserInstagramData = require('../getUserInstagramData');
+const getFollowerInstagramRelation = require('../getFollowerInstagramData');
+const getAllFollowerInstagramRelation = require('../getAllFollowerInstagramData');
 const {
   findUserNotSearch,
   updateUserById,
@@ -10,8 +10,8 @@ const {
   insertUser,
   getUserByUserName,
   findUserNotFetchToFetch
-} = require('./user');
-const { getUserRelationById } = require('./userRelation')
+} = require('../user');
+const { getUserRelationById } = require('../userRelation')
 require('dotenv').config();
 const CronJob = require('cron').CronJob;
 
