@@ -15,12 +15,13 @@ let userCount3 = 3;
 let userFollowerCount = 1;
 
 const main = async () => {
+  console.log('starting...')
   _.times(10000, (index) => {
     setTimeout(async () => {
       const user_id = await findUserNotFetchToFetch();
       console.log(user_id);
       await getAllFollowerInstagramRelation(user_id, headers);
-    }, 10000 * (index+1));
+    }, 30000 * (index+1));
   })
 }
 
