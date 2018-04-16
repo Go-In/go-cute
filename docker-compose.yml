@@ -1,12 +1,15 @@
 version: '3'
+
 services:
   script:
-    build: ./script
-    command: /bin/bash -c 'sleep 5s' && python3 db_experiment.py
+    build: ./scripts_node
+    volumes:
+      - ./scripts_node:/script
     depends_on:
-        - db
+      - db
+    entrypoint: /script/entry.sh
   db:
     image: mysql
     environment:
-          MYSQL_DATABASE: experiment_db
-          MYSQL_ROOT_PASSWORD: experiment_pwd
+      MYSQL_DATABASE: go-cute
+      MYSQL_ROOT_PASSWORD: experiment_pwd
