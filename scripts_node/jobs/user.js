@@ -3,6 +3,10 @@ const {
   findUserNotSearch,
   updateUserById,
 } = require('../user');
+
+/* GETTING Username from IG */
+const getUsernameFromUserID = require('../getUsernameFromUserID');
+
 require('dotenv').config();
 const CronJob = require('cron').CronJob;
 
@@ -13,8 +17,17 @@ const headers = {
 const main = async () => {
   console.log('get user starting...')
   const user = await findUserNotSearch();
-  if(user && user.username) {
-    const igData = await getUserInstagramData(user.username, headers);
+  if (user) {
+    
+    let username;
+    
+    if (!user.username) {
+      username = await getUsernameFromUserID(user.user_id)
+    } else {
+      username = username.username
+    }
+
+    const igData = await getUserInstagramData(username, headers);
     await updateUserById(igData);
   }
 }
