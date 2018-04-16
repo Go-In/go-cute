@@ -63,6 +63,16 @@ const findUserNotFetchToFetch = async () => {
     await connection.end();
   }
 }
+const findUserNotSearch = async () => {
+  const connection = await getConnection();
+  try {
+    const [rows] = await connection.query('SELECT `user_id`, `username` from `users` WHERE is_private is NULL LIMIT 1');
+    await connection.end();
+    return rows[0];
+  } catch(err) {
+    await connection.end();
+  }
+}
 
 const checkUserExited = async (id) => {
   const connection = await getConnection();
@@ -111,4 +121,5 @@ module.exports = {
   findUserNotFetchToFetch,
   checkUserExited,
   updateUserById,
+  findUserNotSearch,
 }
