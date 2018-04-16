@@ -28,7 +28,7 @@ const getFollowerRelation = async (userId, headers) => {
         if (!isExited) {
           await insertUserFromFollower([user]);
         }
-      }, index * 50);
+      }, index * 100);
     })
   }
   console.log(count);
