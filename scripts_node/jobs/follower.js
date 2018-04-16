@@ -23,12 +23,14 @@ const main = async () => {
   console.log('get follower starting...')
   const user = await findUserNotFetchToFetch();
   const igData = await getUserInstagramData(user.username, headers);
-  await updateUserById(igData);
-  if (!igData.is_private) {
-    await getAllFollowerInstagramRelation(user.user_id, headers);
-  }
-  else {
-    console.log(`${igData.username} is private.`);
+  if (igData) {
+    await updateUserById(igData);
+    if (!igData.is_private) {
+      await getAllFollowerInstagramRelation(user.user_id, headers);
+    }
+    else {
+      console.log(`${igData.username} is private.`);
+    }
   }
 }
 

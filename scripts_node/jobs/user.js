@@ -13,7 +13,7 @@ const headers = {
 const main = async () => {
   console.log('get user starting...')
   const user = await findUserNotSearch();
-  if(user.username) {
+  if(user && user.username) {
     const igData = await getUserInstagramData(user.username, headers);
     await updateUserById(igData);
   }
