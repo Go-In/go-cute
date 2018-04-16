@@ -41,7 +41,6 @@ const insertUserFromFollower = async (userData) => {
   try {
     await connection.beginTransaction();
     await connection.query('INSERT INTO users (user_id, full_name, username, profile_pic_url) VALUES ?', [userData]);
-    console.log('user data saved.');
     await connection.commit();
     await connection.end();
   } catch (err) {
@@ -55,11 +54,11 @@ const findUserNotFetchToFetch = async () => {
   const connection = await getConnection();
   try {
     await connection.beginTransaction();
-    const [rows] = await connection.query('SELECT `user_id` from `users` WHERE `is_fetch` = FALSE LIMIT 1');
+    const [rows] = await connection.query('SELECT `user_id`, `username` from `users` WHERE `is_fetch` = FALSE LIMIT 1');
     await connection.query('UPDATE users SET `is_fetch` = 1 WHERE `user_id` = ?', [rows[0].user_id])
     await connection.commit();
     await connection.end();
-    return rows[0].user_id;
+    return rows[0];
   } catch(err) {
     await connection.rollback();
     await connection.end();
@@ -77,6 +76,33 @@ const checkUserExited = async (id) => {
   }
 }
 
+const updateUserById = async (payload) => {
+  console.log(payload);
+  const connection = await getConnection();
+  try {
+    await connection.query(' UPDATE users SET full_name = ?, username = ?, biography = ?, edge_followed_by = ?, edge_follow = ?, profile_pic_url = ?, is_private = ?, media_count = ? WHERE user_id = ?',
+    [
+      payload.full_name,
+      payload.username,
+      payload.biography,
+      payload.edge_followed_by,
+      payload.edge_follow,
+      payload.profile_pic_url,
+      payload.is_private ? 1 : 0,
+      payload.media_count,
+      payload.user_id,
+    ])
+    await connection.commit();
+    console.log(`updated, ${payload.username}`)
+    await connection.end();
+  } catch(err) {
+    console.log(err);
+    throw err;
+    await connection.rollback();
+    await connection.end();
+  }
+}
+
 module.exports = {
   getUserById,
   insertUser,
@@ -84,4 +110,5 @@ module.exports = {
   insertUserFromFollower,
   findUserNotFetchToFetch,
   checkUserExited,
+  updateUserById,
 }

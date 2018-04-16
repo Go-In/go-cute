@@ -18,14 +18,14 @@ const getFollowerRelation = async (userId, headers) => {
     const data = await getUsers(userId, headers, query_hash, token);
     next = data.page_info.has_next_page;
     token = data.page_info.end_cursor;
-    await insertUserRelations(data.relations);
+    if (data.relations.length > 0) {
+      await insertUserRelations(data.relations);
+    }
     data.users.map(async (user, index) => {
       count += 1;
       if (!await checkUserExited(user[0])) {
         setTimeout(async() => {
-          console.log(index*50)
           await insertUserFromFollower([user]);
-          console.log('done', user[0])
         }, index*50);
       }
     })
