@@ -37,7 +37,6 @@ const insertUser = async (userData) => {
 
 const insertUserFromFollower = async (userData) => {
   const connection = await getConnection();
-
   try {
     await connection.beginTransaction();
     await connection.query('INSERT INTO users (user_id, full_name, username, profile_pic_url) VALUES ?', [userData]);
@@ -72,6 +71,7 @@ const checkUserExited = async (id) => {
     await connection.end();
     return Object.values(rows[0])[0] === 1;
   } catch(err) {
+    await connection.end();
     throw err;
   }
 }

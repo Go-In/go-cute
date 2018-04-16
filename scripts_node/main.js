@@ -20,7 +20,10 @@ const main = async () => {
       if (!igData.is_private) {
         await getAllFollowerInstagramRelation(user.user_id, headers);
       }
-    }, 60000 * (index+1));
+      else {
+        console.log(`${igData.username} is private.`);
+      }
+    }, 60000 * (index));
   })
 }
 

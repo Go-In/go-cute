@@ -23,11 +23,12 @@ const getFollowerRelation = async (userId, headers) => {
     }
     data.users.map(async (user, index) => {
       count += 1;
-      if (!await checkUserExited(user[0])) {
-        setTimeout(async() => {
+      setTimeout(async() => {
+        const isExited = await checkUserExited(user[0]);
+        if (!isExited) {
           await insertUserFromFollower([user]);
-        }, index*50);
-      }
+        }
+      }, index * 50);
     })
   }
   console.log(count);
