@@ -21,15 +21,16 @@ const getFollowerRelation = async (userId, headers) => {
     if (data.relations.length > 0) {
       await insertUserRelations(data.relations);
     }
-    data.users.map(async (user, index) => {
+    const connection = await getConnection();
+    const results = data.users.map(async (user, index) => {
       count += 1;
-      setTimeout(async() => {
-        const isExited = await checkUserExited(user[0]);
-        if (!isExited) {
-          await insertUserFromFollower([user]);
-        }
-      }, index * 100);
+      const isExited = await checkUserExited(user[0], connection);
+      if (!isExited) {
+        await insertUserFromFollower([user], connection);
+      }
+      return count;
     })
+    Promise.all(results).then(() => connection.end());
   }
   console.log(count);
   console.log('*********************');

@@ -35,16 +35,13 @@ const insertUser = async (userData) => {
   }
 }
 
-const insertUserFromFollower = async (userData) => {
-  const connection = await getConnection();
+const insertUserFromFollower = async (userData, connection) => {
   try {
     await connection.beginTransaction();
     await connection.query('INSERT INTO users (user_id, full_name, username, profile_pic_url) VALUES ?', [userData]);
     await connection.commit();
-    await connection.end();
   } catch (err) {
     await connection.rollback();
-    await connection.end();
     console.log(err)
     throw err;
   }
@@ -74,14 +71,11 @@ const findUserNotSearch = async () => {
   }
 }
 
-const checkUserExited = async (id) => {
-  const connection = await getConnection();
+const checkUserExited = async (id, connection) => {
   try {
     const [rows] = await connection.query('SELECT EXISTS(SELECT 1 FROM `users` WHERE `user_id` = ? LIMIT 1)', [id]);
-    await connection.end();
     return Object.values(rows[0])[0] === 1;
   } catch(err) {
-    await connection.end();
     throw err;
   }
 }
