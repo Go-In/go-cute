@@ -1,11 +1,11 @@
 require('isomorphic-fetch');
 
 const query_hash = '1cb6ec562846122743b61e492c85999f';
-const getUrl = postId => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"shortcode":"${postId}","first": 1000}`
+const getUrl = postShortCode => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"shortcode":"${postShortCode}","first": 1000}`
 
-module.exports = async (postId, headers) => {
+module.exports = async (postShortCode, postId, ownerId, headers) => {
   try {
-    const res = await fetch(getUrl(postId), { 
+    const res = await fetch(getUrl(postShortCode), { 
       headers
     });
     const resJSON = await res.json();
@@ -22,7 +22,7 @@ module.exports = async (postId, headers) => {
     return edges.map(e => (
         [
           postId,
-          'xxxx',
+          ownerId,
           e.node.id,
         ]
       ));
