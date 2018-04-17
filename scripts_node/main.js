@@ -14,8 +14,10 @@ const headers = {
 }
 
 const main = async () => {
-  const data = await getLikes('BhoRH-DHsbWfq48d0H7OawZewISJ1s7h9ci_Xg0', headers);
-  insertLikesFromPost(data);
+  const data = await getLikes('BhoRH-DHsbWfq48d0H7OawZewISJ1s7h9ci_Xg0', 'x', 'x', headers);
+  console.log(data.length);
+  // insertLikesFromPost(data);
+
   // console.log('starting...')
   // _.times(20000, (index) => {
   //   setTimeout(async () => {
