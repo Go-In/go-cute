@@ -35,6 +35,21 @@ const main = async () => {
   } catch(err) {
     console.log(err);
   }
+
+  const createLikeTableSql = `CREATE TABLE likes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id VARCHAR(255),
+    owner_id VARCHAR(255),
+    user_id VARCHAR(255)
+  )`;
+
+  try {
+    await connection.execute(createLikeTableSql)
+    console.log('create likes table');
+  } catch (err) {
+    console.log(err);
+  }
+
   connection.end();
 };
 

@@ -1,13 +1,10 @@
 require('isomorphic-fetch');
 
-const query_hash = 'bfe6fc64e0775b47b311fc0398df88a9'
-const getUrl = userId => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}
+const query_hash = '1cb6ec562846122743b61e492c85999f';
+const getUrl = postId => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}
 &variables={
-  "user_id":"${userId}",
-  "include_chaining":false,
-  "include_reel":true,
-  "include_suggested_users":false,
-  "include_logged_out_extras":false
+  "shortcode":"${postId}",
+  "first": 1000,
 }`
 
 module.exports = async (userId, headers) => {
