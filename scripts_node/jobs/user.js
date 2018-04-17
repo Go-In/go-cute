@@ -3,6 +3,7 @@ const {
   findUserNotSearch,
   updateUserById,
 } = require('../user');
+const getConnection = require('../connection');
 
 /* GETTING Username from IG */
 const getUsernameFromUserID = require('../getUsernameFromUserID');
@@ -16,24 +17,18 @@ const headers = {
 
 const main = async () => {
   console.log('get user starting...')
-  const user = await findUserNotSearch();
+  const connection = await getConnection();
+  const user = await findUserNotSearch(connection);
   if (user) {
-    
-    let username;
-    
-    if (!user.username) {
-      username = await getUsernameFromUserID(user.user_id)
-    } else {
-      username = username.username
-    }
-
+    const username = await getUsernameFromUserID(user.user_id, headers)
     const igData = await getUserInstagramData(username, headers);
-    await updateUserById(igData);
+    await updateUserById(igData, connection);
+    await connection.end();
   }
 }
 
 const getUser = new CronJob({
-  cronTime: '*/2 * * * * *',
+  cronTime: '*/3 * * * * *',
   onTick: () => {
     main();
   },

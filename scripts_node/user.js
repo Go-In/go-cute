@@ -57,14 +57,12 @@ const findUserNotFetchToFetch = async (connection) => {
     await connection.rollback();
   }
 }
-const findUserNotSearch = async () => {
-  const connection = await getConnection();
+const findUserNotSearch = async (connection) => {
   try {
     const [rows] = await connection.query('SELECT `user_id`, `username` from `users` WHERE is_private is NULL LIMIT 1');
-    await connection.end();
     return rows[0];
   } catch(err) {
-    await connection.end();
+    console.log(err);
   }
 }
 
