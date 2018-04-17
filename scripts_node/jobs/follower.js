@@ -3,6 +3,7 @@ const moment = require('moment');
 const getUserInstagramData = require('../getUserInstagramData');
 const getFollowerInstagramRelation = require('../getFollowerInstagramData');
 const getAllFollowerInstagramRelation = require('../getAllFollowerInstagramData');
+const getConnection = require('../connection');
 const {
   findUserNotSearch,
   updateUserById,
@@ -21,14 +22,16 @@ const headers = {
 
 const main = async () => {
   console.log('get follower starting...')
-  const user = await findUserNotFetchToFetch();
+  const connection = await getConnection();
+  const user = await findUserNotFetchToFetch(connection);
   const igData = await getUserInstagramData(user.username, headers);
   if (igData) {
-    await updateUserById(igData);
+    await updateUserById(igData, connection);
     if (!igData.is_private) {
-      await getAllFollowerInstagramRelation(user.user_id, headers);
+      await getAllFollowerInstagramRelation(user.user_id, headers, connection);
     }
     else {
+      await connection.end();
       console.log(`${igData.username} is private.`);
     }
   }

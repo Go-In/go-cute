@@ -46,18 +46,15 @@ const insertUserFromFollower = async (userData, connection) => {
     throw err;
   }
 }
-const findUserNotFetchToFetch = async () => {
-  const connection = await getConnection();
+const findUserNotFetchToFetch = async (connection) => {
   try {
     await connection.beginTransaction();
     const [rows] = await connection.query('SELECT `user_id`, `username` from `users` WHERE `is_fetch` = FALSE LIMIT 1');
     await connection.query('UPDATE users SET `is_fetch` = 1 WHERE `user_id` = ?', [rows[0].user_id])
     await connection.commit();
-    await connection.end();
     return rows[0];
   } catch(err) {
     await connection.rollback();
-    await connection.end();
   }
 }
 const findUserNotSearch = async () => {
@@ -80,9 +77,8 @@ const checkUserExited = async (id, connection) => {
   }
 }
 
-const updateUserById = async (payload) => {
+const updateUserById = async (payload, connection) => {
   console.log(payload);
-  const connection = await getConnection();
   try {
     await connection.query(' UPDATE users SET full_name = ?, username = ?, biography = ?, edge_followed_by = ?, edge_follow = ?, profile_pic_url = ?, is_private = ?, media_count = ? WHERE user_id = ?',
     [
@@ -98,12 +94,10 @@ const updateUserById = async (payload) => {
     ])
     await connection.commit();
     console.log(`updated, ${payload.username}`)
-    await connection.end();
   } catch(err) {
     console.log(err);
     throw err;
     await connection.rollback();
-    await connection.end();
   }
 }
 

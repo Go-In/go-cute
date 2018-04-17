@@ -10,7 +10,7 @@ const { insertUserFromFollower, checkUserExited } = require('./user');
 
 const getPath = (userId, query_hash, token = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"id":"${userId}","first":${max},"after":"${token}"}`
 
-const getFollowerRelation = async (userId, headers) => {
+const getFollowerRelation = async (userId, headers, connection) => {
   let next = true;
   let token = undefined;
   let count = 0;
@@ -21,16 +21,19 @@ const getFollowerRelation = async (userId, headers) => {
     if (data.relations.length > 0) {
       await insertUserRelations(data.relations);
     }
-    const connection = await getConnection();
-    const results = data.users.map(async (user, index) => {
+    const results = await Promise.all(data.users.map(async (user, index) => {
       count += 1;
       const isExited = await checkUserExited(user[0], connection);
       if (!isExited) {
-        await insertUserFromFollower([user], connection);
+        return await insertUserFromFollower([user], connection);
       }
-      return count;
-    })
-    Promise.all(results).then(() => connection.end());
+      return await count;
+    }))
+    Promise.all(results).then(() => {
+      if(next === false) {
+        connection.end();
+      }
+    });
   }
   console.log(count);
   console.log('*********************');
