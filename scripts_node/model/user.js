@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-const getConnection = require('./connection');
+const getConnection = require('../connection');
 
 const getUserById = async (id) => {
   const connection = await getConnection();

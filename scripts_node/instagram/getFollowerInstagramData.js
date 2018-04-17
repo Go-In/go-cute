@@ -1,6 +1,6 @@
 require('isomorphic-fetch');
 const mysql = require('mysql2');
-const getConnection = require('./connection');
+const getConnection = require('../connection');
 
 const max = 1000;
 

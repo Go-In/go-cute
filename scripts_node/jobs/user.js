@@ -3,7 +3,7 @@ const getUsernameFromUserID = require('../instagram/getUsernameFromUserID');
 const {
   findUserNotSearch,
   updateUserById,
-} = require('../user');
+} = require('../model/user');
 const getConnection = require('../connection');
 
 require('dotenv').config();

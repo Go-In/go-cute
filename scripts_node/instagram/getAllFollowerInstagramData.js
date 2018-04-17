@@ -1,11 +1,11 @@
 require('isomorphic-fetch');
 const mysql = require('mysql2');
-const getConnection = require('./connection');
+const getConnection = require('../connection');
 
 const max = 1000;
 const query_hash = '37479f2b8209594dde7facb0d904896a';
-const { insertUserRelations } = require('./userRelation');
-const { insertUserFromFollower, checkUserExited } = require('./user');
+const { insertUserRelations } = require('../model/userRelation');
+const { insertUserFromFollower, checkUserExited } = require('../model/user');
 // const token = 'AQBJFvVF3UY_lLuWfgFptSfY49vYKSylmkMH_bFhDBxNAeAN-dPyQ_Ehd-NT3X1YK4N63pXdzoU2kuuHiEveGITclElRCYUf89XOD96vhHesdQ';
 
 const getPath = (userId, query_hash, token = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"id":"${userId}","first":${max},"after":"${token}"}`
