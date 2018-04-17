@@ -1,12 +1,10 @@
-const getUserInstagramData = require('../getUserInstagramData');
+const getUserInstagramData = require('../instagram/getUserInstagramData');
+const getUsernameFromUserID = require('../instagram/getUsernameFromUserID');
 const {
   findUserNotSearch,
   updateUserById,
 } = require('../user');
 const getConnection = require('../connection');
-
-/* GETTING Username from IG */
-const getUsernameFromUserID = require('../getUsernameFromUserID');
 
 require('dotenv').config();
 const CronJob = require('cron').CronJob;
