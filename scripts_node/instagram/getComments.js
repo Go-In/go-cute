@@ -17,10 +17,15 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
         headers
       });
       const resJSON = await res.json();
+      // console.log(`https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"shortcode":"${postShortCode}","first": ${max},"after":"${end_cursor}"}`)
       const edge_media_to_comment = resJSON.data.shortcode_media.edge_media_to_comment;
       next = edge_media_to_comment.page_info.has_next_page;
       end_cursor = edge_media_to_comment.page_info.end_cursor;
       edges = _.concat(edges, edge_media_to_comment.edges);
+      for(i in edges){
+        console.log(edges)
+      }
+      
     }
 
     return edges.map(e => (
