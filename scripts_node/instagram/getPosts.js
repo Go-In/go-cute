@@ -3,7 +3,7 @@ require('isomorphic-fetch');
 
 
 const query_hash = '42323d64886122307be10013ad2dcc44';
-const max = 30;
+const max = 50;
 // const getUrl = (postShortCode, end_cursor = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables=%7B"id"%3A"${postShortCode}"%2C"first"%3A${max}%2C"after"%3A"${end_cursor}"%7D`;
 const getUrl = (postShortCode, end_cursor = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"id":"${postShortCode}","first": ${max},"after":"${end_cursor}"}`;
 module.exports = async (postShortCode, postId, ownerId, headers) => {
@@ -41,7 +41,7 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
         [
           e.node.id,
           e.node.__typename,
-          (1 === 2) ? 'eiei':'haha',
+          ((e.node.edge_media_to_caption.edges).length === 1) ? e.node.edge_media_to_caption.edges[0].node.text:'',
         //   e.node.edge_media_to_comment.count,
         ]
       ));
