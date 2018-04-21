@@ -41,7 +41,9 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
         [
           e.node.id,
           e.node.__typename,
-          ((e.node.edge_media_to_caption.edges).length === 1) ? e.node.edge_media_to_caption.edges[0].node.text:'',
+          ((e.node.edge_media_to_caption.edges).length === 1) ? e.node.edge_media_to_caption.edges[0].node.text:'', //Caption
+          e.node.display_url, //Pictures Url
+          e.node.edge_media_to_comment.count,
         //   e.node.edge_media_to_comment.count,
         ]
       ));
