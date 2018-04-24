@@ -6,7 +6,7 @@ const headers = {
 }
 
 const max = 50;
-const query_hash = '37479f2b8209594dde7facb0d904896a';
+const query_hash = '58712303d941c6855d4e888c5f0cd22f';
 const getPath = (userId, token = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"id":"${userId}","first":${max},"after":"${token}"}`;
 
 const main = async () => {
@@ -19,17 +19,17 @@ const main = async () => {
     console.log('fetch')
     const res = await fetch(url, { headers });
     const json = await res.json();
-    // if (json.status === 'fail') {
-    //   console.log('request fail')
-    //   await delay(600000);
-    // } else {
-    //   canNext = json.data.user.edge_followed_by.page_info.has_next_page
-    //   cursor = json.data.user.edge_followed_by.page_info.end_cursor;
-    //   console.log('cursor= ', cursor);
-    //   console.log('round= ', r++);
-    // }
-    const edges = json.data.user.edge_followed_by.edges;
-    console.log(edges.map(edge => [ edge.node.id, user_id ]))
+    if (json.status === 'fail') {
+      console.log('request fail')
+      await delay(600000);
+    } else {
+      canNext = json.data.user.edge_follow.page_info.has_next_page
+      cursor = json.data.user.edge_follow.page_info.end_cursor;
+      console.log('cursor= ', cursor);
+      console.log('round= ', r++);
+    }
+    const edges = json.data.user.edge_follow_info.edges;
+    console.log(edges);
   // }
 }
 
