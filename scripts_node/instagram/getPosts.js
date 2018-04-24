@@ -5,8 +5,8 @@ require('isomorphic-fetch');
 const query_hash = '42323d64886122307be10013ad2dcc44';
 const max = 50;
 // const getUrl = (postShortCode, end_cursor = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables=%7B"id"%3A"${postShortCode}"%2C"first"%3A${max}%2C"after"%3A"${end_cursor}"%7D`;
-const getUrl = (postShortCode, end_cursor = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"id":"${postShortCode}","first": ${max},"after":"${end_cursor}"}`;
-module.exports = async (postShortCode, postId, ownerId, headers) => {
+const getUrl = (user_id, end_cursor = '') => `https://www.instagram.com/graphql/query/?query_hash=${query_hash}&variables={"id":"${user_id}","first": ${max},"after":"${end_cursor}"}`;
+module.exports = async (user_id, postId, ownerId, headers) => {
   try {
     let next = true;
     let end_cursor = "";
@@ -14,9 +14,9 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
     let c = 1; 
     let i = 0;
     let stopu = true;
-    const MAX = 40;
+    const MAX = 1;
     while (stopu) {
-      const res = await fetch(getUrl(postShortCode, end_cursor), { 
+      const res = await fetch(getUrl(user_id, end_cursor), { 
         headers
       });
       const resJSON = await res.json();
@@ -42,7 +42,7 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
     
     return edges.map(e => (
         [
-          postShortCode,  //ownerID
+          user_id,  //ownerID
           e.node.id,
           e.node.__typename,
           ((e.node.edge_media_to_caption.edges).length === 1) ? e.node.edge_media_to_caption.edges[0].node.text:'', //Caption

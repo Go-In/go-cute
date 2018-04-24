@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const getConnection = require('../connection');
 
-const insertPostFromPost = async (payload) => {
+const insertPostFromUserID = async (payload) => {
   const connection = await getConnection();
 //   console.log(connection);
   const sql = "INSERT INTO post (user_id, post_id, type_name, caption, display_url, comment_count, shortcode) VALUES ?";
@@ -20,5 +20,5 @@ const insertPostFromPost = async (payload) => {
 }
 
 module.exports = {
-  insertPostFromPost
+  insertPostFromUserID
 }
