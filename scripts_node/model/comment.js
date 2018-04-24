@@ -1,10 +1,10 @@
 const mysql = require('mysql2/promise');
 const getConnection = require('../connection');
 
-const insertPostFromUserID = async (payload) => {
+const insertCommentFromShortCode = async (payload) => {
   const connection = await getConnection();
 //   console.log(connection);
-  const sql = "INSERT INTO post (user_id, post_id, type_name, caption, display_url, comment_count, shortcode, timestamp) VALUES ?";
+  const sql = "INSERT INTO comment (short_code, user_id, comment_id, commentator_id, comment, timestamp) VALUES ?";
   console.log("Hello");
   try {
     console.log("Test");
@@ -20,5 +20,5 @@ const insertPostFromUserID = async (payload) => {
 }
 
 module.exports = {
-  insertPostFromUserID
+    insertCommentFromShortCode
 }

@@ -58,7 +58,8 @@ const main = async () => {
     caption VARCHAR(10000),
     display_url VARCHAR(255),
     comment_count INT,
-    shortcode VARCHAR(255)
+    shortcode VARCHAR(255),
+    timestamp VARCHAR(255)
   )`;
 
   const convertPostTable = 'ALTER TABLE post CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin';
@@ -66,6 +67,25 @@ const main = async () => {
     await connection.execute(createPostTableSql);
     await connection.execute(convertPostTable);
     console.log('created post table.');
+  } catch(err) {
+    console.log(err);
+  }
+
+  const createCommentTableSql = `CREATE TABLE comment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    short_code VARCHAR(255),
+    user_id VARCHAR(255),
+    comment_id VARCHAR(255),
+    commentator_id VARCHAR(255),
+    comment VARCHAR(10000),
+    timestamp VARCHAR(255)
+  )`;
+
+  const convertCommentTable = 'ALTER TABLE comment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin';
+  try {
+    await connection.execute(createCommentTableSql);
+    await connection.execute(convertCommentTable);
+    console.log('created comment table.');
   } catch(err) {
     console.log(err);
   }

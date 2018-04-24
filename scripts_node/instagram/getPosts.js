@@ -14,7 +14,7 @@ module.exports = async (user_id, postId, ownerId, headers) => {
     let c = 1; 
     let i = 0;
     let stopu = true;
-    const MAX = 1;
+    const MAX = 2;
     while (stopu) {
       const res = await fetch(getUrl(user_id, end_cursor), { 
         headers
@@ -49,6 +49,7 @@ module.exports = async (user_id, postId, ownerId, headers) => {
           e.node.display_url, //Pictures Url
           e.node.edge_media_to_comment.count,
           e.node.shortcode,
+          (e.node.taken_at_timestamp).toString()
         //   e.node.edge_media_to_comment.count,
         ]
       ));

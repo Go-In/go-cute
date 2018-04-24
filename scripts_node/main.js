@@ -4,6 +4,7 @@ const getComments = require('./instagram/getComments')
 const getPost = require('./instagram/getPosts')
 const { insertLikesFromPost } = require('./model/like');
 const { insertPostFromUserID } = require('./model/post');
+const { insertCommentFromShortCode } = require('./model/comment');
 require('dotenv').config();
 
 const headers = {
@@ -14,8 +15,9 @@ const headers = {
 const main = async () => {
   console.log("Hello");
   // const data = await getLikes('BdXhLmklEpKdaEmoP-dhvugvxeCjgf-gnYRA6U0', 'x', 'x', headers);
-  // const data = await getComments('BhrSMvcFkic', 'x', 'y', headers);
-  const data = await getPost('11817619', 'x', 'y', headers);
+  // const data = await getComments('BhrSMvcFkic', 'ownerID', headers);
+  const data = await getPost('5352057383', 'x', 'y', headers);
+  // const data = await getComments('BhrSMvcFkic', 'x', headers);
   console.log(data)
   // ================================================================================
   // To database
@@ -23,7 +25,7 @@ const main = async () => {
   // const test1 = [ ['Yassssss! So happy! Time to say Bye to Switzerland and say hello to Bangkok🇨🇭♥️ #happytrip','I miss this color!  นาววว 🏝','3', '1', '2', 3, '4'],['4','5','6','7','8',9,'10'] ];
   
   await insertPostFromUserID(data);
-  
+  // await insertCommentFromShortCode(data);
 }
 
 
