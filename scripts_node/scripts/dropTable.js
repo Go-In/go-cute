@@ -8,6 +8,7 @@ const main = async () => {
     await connection.execute('DROP TABLE users');
     await connection.execute('DROP TABLE user_relations');
     await connection.execute('DROP TABLE likes');
+    await connection.execute('DROP TABLE post');
     console.log('drop table.');
   } catch(err) {
     console.log(err);

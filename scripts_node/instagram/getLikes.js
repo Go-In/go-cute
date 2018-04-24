@@ -17,7 +17,9 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
         headers
       });
       const resJSON = await res.json();
+      console.log(resJSON)
       const edge_liked_by = resJSON.data.shortcode_media.edge_liked_by;
+      
       next = edge_liked_by.page_info.has_next_page;
       end_cursor = edge_liked_by.page_info.end_cursor;
       edges = _.concat(edges, edge_liked_by.edges);

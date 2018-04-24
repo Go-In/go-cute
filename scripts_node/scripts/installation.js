@@ -50,6 +50,25 @@ const main = async () => {
     console.log(err);
   }
 
+  const createPostTableSql = `CREATE TABLE post (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255),
+    post_id VARCHAR(255),
+    type_name VARCHAR(255),
+    caption VARCHAR(10000),
+    display_url VARCHAR(255),
+    comment_count INT,
+    shortcode VARCHAR(255)
+  )`;
+
+  const convertPostTable = 'ALTER TABLE post CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin';
+  try {
+    await connection.execute(createPostTableSql);
+    await connection.execute(convertPostTable);
+    console.log('created post table.');
+  } catch(err) {
+    console.log(err);
+  }
   connection.end();
 };
 
