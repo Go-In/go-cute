@@ -1,6 +1,7 @@
 const mysql = require('mysql2/promise');
 const getConnection = require('../connection');
 
+// node scripts/uniqTable.js bnk_relations user_id,followed_id
 const main = async () => {
   const tableName = process.argv[2];
   const fields = process.argv[3];
