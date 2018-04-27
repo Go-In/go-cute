@@ -1,20 +1,20 @@
 const mysql = require('mysql2/promise');
 const getConnection = require('../connection');
 
-// node scripts/uniqTable.js bnk_relations user_id,followed_id
 const main = async () => {
-  const tableName = process.argv[2];
-  const fields = process.argv[3];
+  const tableLike = 'users';
+  const tableName = 'user_from_follow';
+  const uniqFields = 'user_id'; // column1,column2,...
+  const tableInsert = 'bnk_relations';
 
-  console.log(`Uniqe Table ${tableName} by ${fields}.`);
-  const uniqTable = `${tableName}_uniq`;
+  console.log(`Uniqe Table ${tableInsert} by ${uniqFields}.`);
   const connection = await getConnection();
 
-  await connection.execute(`CREATE TABLE ${uniqTable} LIKE ${tableName};`);
-  console.log(`create table ${uniqTable}.`);
-  await connection.execute(`ALTER TABLE ${uniqTable} ADD UNIQUE(${fields});`);
+  await connection.execute(`CREATE TABLE ${tableName} LIKE ${tableLike};`);
+  console.log(`create table ${tableName}.`);
+  await connection.execute(`ALTER TABLE ${tableName} ADD UNIQUE(${uniqFields});`);
   console.log('Inserting...');
-  await connection.execute(`INSERT IGNORE INTO ${uniqTable} SELECT * FROM ${tableName};`);
+  await connection.execute(`INSERT IGNORE INTO ${tableName} (user_id) SELECT user_id FROM ${tableInsert};`);
   await connection.end();
   console.log('Completed.')
 }
