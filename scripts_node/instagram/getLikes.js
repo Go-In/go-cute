@@ -15,7 +15,7 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
     let edges = [];
     let c = 1; 
     let i=0;
-    while (i<2) {
+    while (next) {
       const res = await fetch(getUrl(postShortCode, end_cursor), { 
         headers
       });
