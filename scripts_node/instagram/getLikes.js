@@ -13,18 +13,22 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
     let edges = [];
     let c = 1; 
     let i=0;
-    while (i < 10) {
+    while (i<10) {
       const res = await fetch(getUrl(postShortCode, end_cursor), { 
         headers
       });
       const resJSON = await res.json();
       // console.log(resJSON)
+      // if( json.status === 'fail') {
+      //   console
+      // }
       const edge_liked_by = resJSON.data.shortcode_media.edge_liked_by;
       
       next = edge_liked_by.page_info.has_next_page;
       end_cursor = edge_liked_by.page_info.end_cursor;
       edges = _.concat(edges, edge_liked_by.edges);
-      i++;
+      i += 1;
+      console.log(i);
     }
 
     return edges.map(e => (
