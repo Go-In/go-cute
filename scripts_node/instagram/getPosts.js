@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const delay = require('delay')
+const delay = require('delay');
 require('isomorphic-fetch');
 
 

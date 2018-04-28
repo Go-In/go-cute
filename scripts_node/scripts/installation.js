@@ -91,6 +91,23 @@ const main = async () => {
   } catch(err) {
     console.log(err);
   }
+  // connection.end();
+
+  const createLikecountTable = `CREATE TABLE likecount (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255),
+    total_like INT,
+    collected_like INT
+  )`;
+
+  // const convertCommentTable = 'ALTER TABLE comment CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin';
+  try {
+    await connection.execute(createLikecountTable);
+    // await connection.execute(convertCommentTable);
+    console.log('created likecount table.');
+  } catch(err) {
+    console.log(err);
+  }
   connection.end();
 };
 

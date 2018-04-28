@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const delay = require('delay');
 const getConnection = require('../connection');
 
 const insertPostFromUserID = async (payload) => {

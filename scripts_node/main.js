@@ -3,6 +3,7 @@ const getLikes = require('./instagram/getLikes.js');
 const getComments = require('./instagram/getComments')
 const getPost = require('./instagram/getPosts')
 const { insertLikesFromPost } = require('./model/like');
+const { insertLikesCount } = require('./model/like');
 const { insertPostFromUserID } = require('./model/post');
 const { getShortCode } = require('./model/post');
 const { insertCommentFromShortCode } = require('./model/comment');
@@ -89,17 +90,24 @@ const main = async () => {
     // console.log(user_id)
     const shortcodePack = await getShortCode(Number(user_id));
     var sum=0;
+    var real_data_sum=0;
     for (i in shortcodePack) {
       const shortcode = shortcodePack[i].shortcode;
       const ownerID = shortcodePack[i].user_id;
       sum += shortcodePack[i].like_count;
       // console.log(shortcode)
-      // const data = await getLikes(shortcode, 'x', ownerID, headers);
+      console.log(shortcode);
+      const data = await getLikes(shortcode, 'x', ownerID, headers);
       // console.log(sum)
       // await insertLikesFromPost(data);
+      // console.log('data = ',data.length);
+      real_data_sum += data;
+      console.log('*******');
     }
-    await console.log(user_id, "sum like =",sum);
-    await console.log("================================================================================")
+    console.log(user_id, "sum like =",sum);
+    await insertLikesCount([[user_id, sum, real_data_sum]])
+    console.log("Total - Real of like =", sum-real_data_sum);
+    console.log("================================================================================")
   }
   
   // console.log(data.length);

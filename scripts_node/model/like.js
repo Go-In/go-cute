@@ -12,6 +12,18 @@ const insertLikesFromPost = async (payload) => {
   }
 }
 
+const insertLikesCount = async (payload) => {
+  const connection = await getConnection();
+  try {
+    await connection.query('INSERT INTO likecount (user_id,total_like, collected_like) VALUES ?', [payload]);
+    await connection.end();
+    console.log("Insert Success !!")
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
-  insertLikesFromPost
+  insertLikesFromPost,
+  insertLikesCount
 }

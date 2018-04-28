@@ -1,4 +1,6 @@
 const _ = require('lodash');
+const { insertLikesFromPost } = require('../model/like');
+const delay = require('delay');
 require('isomorphic-fetch');
 
 
@@ -13,31 +15,34 @@ module.exports = async (postShortCode, postId, ownerId, headers) => {
     let edges = [];
     let c = 1; 
     let i=0;
-    while (i<10) {
+    while (i<2) {
       const res = await fetch(getUrl(postShortCode, end_cursor), { 
         headers
       });
       const resJSON = await res.json();
-      // console.log(resJSON)
-      // if( json.status === 'fail') {
-      //   console
-      // }
-      const edge_liked_by = resJSON.data.shortcode_media.edge_liked_by;
-      
-      next = edge_liked_by.page_info.has_next_page;
-      end_cursor = edge_liked_by.page_info.end_cursor;
-      edges = _.concat(edges, edge_liked_by.edges);
-      i += 1;
-      console.log(i);
+      if(resJSON.status == 'fail') {
+        console.log('request fail');
+        await delay(60000);
+      } else {
+        const edge_liked_by = resJSON.data.shortcode_media.edge_liked_by;
+        
+        next = edge_liked_by.page_info.has_next_page;
+        end_cursor = edge_liked_by.page_info.end_cursor;
+        edges = _.concat(edges, edge_liked_by.edges);
+        const data = edge_liked_by.edges.map(e => (
+          [
+            postShortCode,
+            ownerId,
+            e.node.id,
+          ]
+        ));
+        insertLikesFromPost(data);
+        i += 1;
+        console.log(edges.length);
+      }
     }
 
-    return edges.map(e => (
-        [
-          postShortCode,
-          ownerId,
-          e.node.id,
-        ]
-      ));
+    return edges.length;
   } catch (err) {
     console.warn(err);
   }
