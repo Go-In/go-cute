@@ -46,6 +46,9 @@ const getUserData = async (userName, headers) => {
     const user = ((((userData.entry_data || {}).ProfilePage || [])[0] || {}).graphql || {}).user;
     // console.log('username: ' + .user.username);
     // console.log('id: ' + .user.id);
+    if(!user) {
+      return undefined;
+    }
     const payload = {
       user_id: user.id,
       full_name: user.full_name,
