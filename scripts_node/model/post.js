@@ -19,6 +19,30 @@ const insertPostFromUserID = async (payload) => {
   console.log("wtf");
 }
 
+const getShortCode = async () => {
+  const connection = await getConnection();
+  const sqlCommand = "SELECT shortcode, user_id FROM post WHERE post.timestamp > 1524070800;"
+  var result;
+  try {
+    console.log("SELECT FROM TABLE POST");
+    // await connection.query(sqlCommand, function (err, result, fields) {
+    //   if (err) throw err;
+    //   // console.log(result)
+    //   console.log("Test")
+    // });
+    result = await connection.query(sqlCommand)
+    // console.log(result[0][0].shortcode)
+    await connection.end();
+
+  } catch (err) {
+    throw err;
+  }
+  // console.log(result[0][0].user_id)
+  return result;
+}
+
 module.exports = {
-  insertPostFromUserID
+  insertPostFromUserID,
+  getShortCode
+
 }

@@ -6,6 +6,7 @@ const insertLikesFromPost = async (payload) => {
   try {
     await connection.query('INSERT INTO likes (post_id, owner_id, user_id) VALUES ?', [payload]);
     await connection.end();
+    console.log("Insert Success !!")
   } catch (err) {
     throw err;
   }
