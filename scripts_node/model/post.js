@@ -4,7 +4,7 @@ const getConnection = require('../connection');
 const insertPostFromUserID = async (payload) => {
   const connection = await getConnection();
 //   console.log(connection);
-  const sql = "INSERT INTO post (user_id, post_id, type_name, caption, display_url, comment_count, shortcode, timestamp) VALUES ?";
+  const sql = "INSERT INTO post (user_id, post_id, type_name, caption, display_url, comment_count, like_count, shortcode, timestamp, total_post) VALUES ?";
   console.log("Hello");
   try {
     console.log("Test");

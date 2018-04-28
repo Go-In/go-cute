@@ -14,18 +14,20 @@ const headers = {
 
 const main = async () => {
   console.log("Hello");
-  // const data = await getLikes('BdXhLmklEpKdaEmoP-dhvugvxeCjgf-gnYRA6U0', 'x', 'x', headers);
+  const data = await getLikes('Bh_I3wAl1x2', 'x', 'x', headers);
   // const data = await getComments('BhrSMvcFkic', 'ownerID', headers);
-  const data = await getPost('5352057383', 'x', 'y', headers);
+  // const data = await getPost('1180519026', 'x', 'y', headers);
   // const data = await getComments('BhrSMvcFkic', 'x', headers);
-  console.log(data)
+  console.log('================================================================================');
+  console.log(data.length);
   // ================================================================================
   // To database
   // console.log("1");
   // const test1 = [ ['Yassssss! So happy! Time to say Bye to Switzerland and say hello to Bangkok🇨🇭♥️ #happytrip','I miss this color!  นาววว 🏝','3', '1', '2', 3, '4'],['4','5','6','7','8',9,'10'] ];
   
-  await insertPostFromUserID(data);
+  // await insertPostFromUserID(data);
   // await insertCommentFromShortCode(data);
+  await insertLikesFromPost(data)
 }
 
 

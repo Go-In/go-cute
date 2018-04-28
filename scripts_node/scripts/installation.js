@@ -58,9 +58,11 @@ const main = async () => {
     caption VARCHAR(10000),
     display_url VARCHAR(255),
     comment_count INT,
+    like_count INT,
     shortcode VARCHAR(255),
-    timestamp VARCHAR(255)
-  )`;
+    timestamp VARCHAR(255),
+    total_post INT
+    )`;
 
   const convertPostTable = 'ALTER TABLE post CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin';
   try {
