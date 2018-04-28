@@ -80,37 +80,27 @@ const main = async () => {
   '1519917150',
   '648669145']
   console.log("Hello");
-  for (i in targets) {
-    console.log(sw_target[i])
-    console.log([i])
-    const data = await getPost(Number(sw_target[i]), 'x', 'y', headers);
-    await insertPostFromUserID(data);
-    // console.log(data)
-    console.log("================================================================================");
-  }
   
-  // const data = await getLikes('Bh_I3wAl1x2', 'x', 'x', headers);
-  // const data = await getComments('BhrSMvcFkic', 'ownerID', headers);
-  // const data = await getComments('BhrSMvcFkic', 'x', headers);
-  console.log('================================================================================');
   // unixx = moment("4-1-2018","MM-DD-YYYY").format('X');
-  unixx = moment.unix(1522515600)
-  console.log(unixx);
-  // const shortcodePack = await getShortCode();
-  
-
-  // console.log(shortcode[0])
-  
-  // for (i in shortcodePack[0]) {
-  //   const shortcode = shortcodePack[0][i].shortcode;
-  //   const ownerID = shortcodePack[0][i].user_id;
-  //   console.log(shortcode)
-  //   const data = await getLikes(shortcode, 'x', ownerID, headers);
-  //   console.log(data)
-  //   // await insertLikesFromPost(data);
-  //   console.log("================================================================================")
-  // }
-  
+  // unixx = moment.unix(1522515600)
+  // console.log(unixx);
+  for (i in targets) {
+    const user_id = targets[i];
+    // console.log(user_id)
+    const shortcodePack = await getShortCode(Number(user_id));
+    var sum=0;
+    for (i in shortcodePack) {
+      const shortcode = shortcodePack[i].shortcode;
+      const ownerID = shortcodePack[i].user_id;
+      sum += shortcodePack[i].like_count;
+      // console.log(shortcode)
+      // const data = await getLikes(shortcode, 'x', ownerID, headers);
+      // console.log(sum)
+      // await insertLikesFromPost(data);
+    }
+    await console.log(user_id, "sum like =",sum);
+    await console.log("================================================================================")
+  }
   
   // console.log(data.length);
   // ================================================================================

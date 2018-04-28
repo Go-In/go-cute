@@ -18,8 +18,8 @@ const insertPostFromUserID = async (payload) => {
 
 const getShortCode = async (user_id) => {
   const connection = await getConnection();
-  const sqlCommand = "SELECT shortcode, user_id FROM post WHERE post.timestamp > 1522515600 && post.user_id = ?;"
-  var result;
+  const sqlCommand = "SELECT shortcode, user_id, like_count FROM post WHERE post.timestamp > 1522515600 && post.user_id = ?;"
+  var result, sum=0;
   try {
     // console.log("SELECT FROM TABLE POST","Hello");
     // console.log(connection.query(sqlCommand, '4636716008'));
@@ -29,8 +29,12 @@ const getShortCode = async (user_id) => {
   } catch (err) {
     throw err;
   }
+  // for(i in result[0]) {
+  //   sum += result[0][i].like_count;
+  //   console.log(sum);
+  // }
   // console.log(result[0][0].user_id)
-  return result;
+  return result[0];
 }
 
 module.exports = {
