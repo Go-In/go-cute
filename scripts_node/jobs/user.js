@@ -3,8 +3,10 @@ const getUsernameFromUserID = require('../instagram/getUsernameFromUserID');
 const {
   findUserNotSearch,
   updateUserById,
+  findUserNotFetchToFetch,
 } = require('../model/user');
 const getConnection = require('../connection');
+const delay = require('delay');
 
 require('dotenv').config();
 const CronJob = require('cron').CronJob;
@@ -15,22 +17,34 @@ const headers = {
 
 const main = async () => {
   console.log('get user starting...')
-  const connection = await getConnection();
-  const user = await findUserNotSearch(connection);
-  if (user) {
+  const stop = false;
+  let user = undefined;
+  let connection;
+  let count = 0;
+  while(!stop) {
+    if (!user) {
+      connection = await getConnection();
+      user = await findUserNotFetchToFetch(connection);
+    }
+    if(!user) {
+      break;
+    }
+    console.log(count);
+    console.log('user id: ', user.user_id);
     const username = await getUsernameFromUserID(user.user_id, headers)
-    const igData = await getUserInstagramData(username, headers);
-    await updateUserById(igData, connection);
-    await connection.end();
+    console.log('username: ', username);
+    if(username) {
+      const igData = await getUserInstagramData(username, headers);
+      await updateUserById(igData, connection);
+      user = undefined;
+      await connection.end();
+      count++;
+    } else {
+      await connection.end();
+      await delay(200000);
+      connection = await getConnection();
+    }
   }
 }
 
-const getUser = new CronJob({
-  cronTime: '*/3 * * * * *',
-  onTick: () => {
-    main();
-  },
-  start: true,
-});
-
-getUser.start();
+main();

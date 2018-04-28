@@ -9,9 +9,13 @@ module.exports = async (userId, headers) => {
       headers
     });
     const resJSON = await res.json();
-    const reel = resJSON.data.user.reel;
-    // can get 2 way
-    return (reel.user.username || reel.owner.username);
+    if (resJSON.status !== 'fail') {
+      const reel = resJSON.data.user.reel;
+      // can get 2 way
+      return (reel.user.username || reel.owner.username);
+    } else {
+      return undefined;
+    }
   } catch (err) {
     console.warn(err);
   }

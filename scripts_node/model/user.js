@@ -49,8 +49,8 @@ const insertUserFromFollower = async (userData, connection) => {
 const findUserNotFetchToFetch = async (connection) => {
   try {
     await connection.beginTransaction();
-    const [rows] = await connection.query('SELECT `user_id`, `username` from `users` WHERE `is_fetch` = FALSE LIMIT 1');
-    await connection.query('UPDATE users SET `is_fetch` = 1 WHERE `user_id` = ?', [rows[0].user_id])
+    const [rows] = await connection.query('SELECT `user_id` from `user_from_follow` WHERE `is_fetch` = FALSE LIMIT 1');
+    await connection.query('UPDATE user_from_follow SET `is_fetch` = 1 WHERE `user_id` = ?', [rows[0].user_id])
     await connection.commit();
     return rows[0];
   } catch(err) {
@@ -78,7 +78,7 @@ const checkUserExited = async (id, connection) => {
 const updateUserById = async (payload, connection) => {
   console.log(payload);
   try {
-    await connection.query(' UPDATE users SET full_name = ?, username = ?, biography = ?, edge_followed_by = ?, edge_follow = ?, profile_pic_url = ?, is_private = ?, media_count = ? WHERE user_id = ?',
+    await connection.query(' UPDATE user_from_follow SET full_name = ?, username = ?, biography = ?, edge_followed_by = ?, edge_follow = ?, profile_pic_url = ?, is_private = ?, media_count = ? WHERE user_id = ?',
     [
       payload.full_name,
       payload.username,
