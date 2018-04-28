@@ -38,7 +38,10 @@ const getUserData = async (userName, headers) => {
       headers,
     });
     const text = await res.text();
-    const userDataText = text.split("window._sharedData = ")[1].split(";</script>")[0];
+    const userDataText = (text.split("window._sharedData = ")[1] || "").split(";</script>")[0];
+    if(userDataText === '') {
+      return undefined;
+    }
     const userData = JSON.parse(userDataText);
     const user = (((userData.entry_data || {}).ProfilePage[0] || {}).graphql || {}).user;
     // console.log('username: ' + .user.username);

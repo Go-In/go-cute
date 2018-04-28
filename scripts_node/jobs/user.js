@@ -35,13 +35,19 @@ const main = async () => {
     console.log('username: ', username);
     if(username) {
       const igData = await getUserInstagramData(username, headers);
-      await updateUserById(igData, connection);
-      user = undefined;
-      await connection.end();
-      count++;
+      if (igData) {
+        await updateUserById(igData, connection);
+        user = undefined;
+        await connection.end();
+        count++;
+      } else {
+        await connection.end();
+        await delay(600000);
+        connection = await getConnection();
+      }
     } else {
       await connection.end();
-      await delay(200000);
+      await delay(600000);
       connection = await getConnection();
     }
   }
