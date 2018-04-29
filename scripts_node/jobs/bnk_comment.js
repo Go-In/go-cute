@@ -16,7 +16,7 @@ const getUrl = (postShortCode, end_cursor = '') => `https://www.instagram.com/gr
 async function getPostIdByUserId(userId) {
   const connection = await getConnection();
   try {
-    const query = await connection.query(`select shortcode from post where user_id=${userId}`);
+    const query = await connection.query(`select shortcode from post where user_id=${userId} and timestamp > 1522515600;`);
     return query[0].map(r => r.shortcode);
   } catch(err) {
     throw err;
