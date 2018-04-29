@@ -5,14 +5,17 @@ const getUrl = userId => `https://www.instagram.com/graphql/query/?query_hash=${
 
 module.exports = async (userId, headers) => {
   try {
+    console.log(getUrl(userId));
     const res = await fetch(getUrl(userId), { 
       headers
     });
     const resJSON = await res.json();
-    if (resJSON.status !== 'fail') {
+    if (resJSON.status !== 'fail' && resJSON.data.user) {
       const reel = resJSON.data.user.reel;
       // can get 2 way
       return (reel.user.username || reel.owner.username);
+    } else if(!resJSON.data.user) {
+      return '';
     } else {
       return undefined;
     }
