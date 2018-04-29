@@ -65,10 +65,13 @@ async function getDataAndSave(postShortCode, user_id) {
 }
 
 async function main() {
-  getDataAndSave('Bh_I3wAl1x2', 'x')
-  // const user_id = process.argv.slice(2)[0];
-  // const list = await getPostIdByUserId(user_id);
-  // console.log(list.length);
+  const user_id = process.argv.slice(2)[0];
+  const list = await getPostIdByUserId(user_id);
+  for (let i=0; i<list.length; i++) {
+    await getDataAndSave(list[i], user_id);
+    console.log('finish ', list[i]);
+  }
+  console.log('finish ', user_id);
 }
 
 main();
