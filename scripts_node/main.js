@@ -1,6 +1,7 @@
 const _ = require('lodash');
-const getLikes = require('./instagram/getLikes.js');
-const { insertLikesFromPost } = require('./model/like');
+const getPostIdByUserId = require('./model/comment');
+const fetchComment = require('./instagram/getComments');
+
 require('dotenv').config();
 
 const headers = {
@@ -8,9 +9,8 @@ const headers = {
 }
 
 const main = async () => {
-  const data = await getLikes('BhoRH-DHsbWfq48d0H7OawZewISJ1s7h9ci_Xg0', 'x', 'x', headers);
-  console.log(data.length);
-  // insertLikesFromPost(data);
+  const comments = await fetchComment('Bh_I3wAl1x2', headers);
+  console.log(comments);
 }
 
 main();
